@@ -55,17 +55,6 @@ export class SenderPage extends HTMLElement {
       </app-header>
       <div id="controller" class="hidden">
         <cast-form></cast-form>
-        <!-- <div>
-          <label for="content-id">Content ID</label>
-          <text-box id="content-id"></text-box>
-        </div>
-        <div>
-          <label for="custom-data">Custom Data</label>
-          <text-box id="custom-data"></text-box>
-        </div>
-        <div>
-          <button-primary>Cast</button-primary>
-        </div> -->
       </div>
     `;
   }
@@ -104,6 +93,7 @@ export class SenderPage extends HTMLElement {
       const {
         contentId,
         customData,
+        metadata,
       } = e.data;
 
       const contentType = contentId.indexOf(/\.m3u8/) ? 'application/x-mpegURL' : 'application/dash+xml';
@@ -111,10 +101,11 @@ export class SenderPage extends HTMLElement {
       previousValues = {
         contentId,
         customData,
+        metadata,
       };
       storage.set('previous-data', JSON.stringify(previousValues));
 
-      castInstance.castMedia(contentId, contentType, customData);
+      castInstance.castMedia(contentId, contentType, customData, metadata);
     });
     castForm.value = previousValues;
   }

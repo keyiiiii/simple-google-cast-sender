@@ -28,6 +28,10 @@ export class CastForm extends HTMLElement {
           <text-box id="custom-data" class="full-w" rows="5"></text-box>
         </div>
         <div class="row">
+          <label for="meta-data">Meta Data: </label>
+          <text-box id="meta-data" class="full-w" rows="5"></text-box>
+        </div>
+        <div class="row">
           <button-primary>Cast</button-primary>
         </div>
       </form>
@@ -38,12 +42,14 @@ export class CastForm extends HTMLElement {
     return {
       contentId: this.textBoxContentId.value,
       customData: JSON.parse(this.textBoxCustomData.value),
+      metadata: JSON.parse(this.textBoxMetadata.value),
     }
   }
 
   set value(data) {
     this.textBoxContentId.value = data.contentId || '';
     this.textBoxCustomData.value = JSON.stringify(data.customData) || '';
+    this.textBoxMetadata.value = JSON.stringify(data.metadata) || '';
   }
 
   connectedCallback() {
@@ -54,6 +60,7 @@ export class CastForm extends HTMLElement {
 
     this.textBoxContentId = shadow.querySelector('text-box');
     this.textBoxCustomData = shadow.querySelector('#custom-data');
+    this.textBoxMetadata = shadow.querySelector('#meta-data');
 
     const button = shadow.querySelector('button-primary');
     button.addEventListener('click', e => {

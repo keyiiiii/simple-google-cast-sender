@@ -45,13 +45,17 @@ export class Cast extends EventListeners {
     Cast.instance = this;
   }
 
-  castMedia(mediaURL, contentType, customData) {
+  castMedia(mediaURL, contentType, customData, metadata) {
     const castSession = this.context.getCurrentSession();
     const mediaInfo = new chrome.cast.media.MediaInfo(mediaURL, contentType);
     const request = new chrome.cast.media.LoadRequest(mediaInfo);
   
     if (customData) {
       mediaInfo.customData = customData;
+    }
+
+    if (metadata) {
+      mediaInfo.metadata = metadata;
     }
   
     castSession.loadMedia(request)
